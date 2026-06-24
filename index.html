@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rossana's Party · Confirma tu asistencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{--red:#9d2335;--red-soft:#b1405a;--cream:#efe9da;--cream-deep:#e7dfca;--line:#9d2335;--ink:#7a2030}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:#efe9da;color:var(--red);font-family:'Cormorant Garamond',Georgia,serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding:30px 14px 70px}
+.wrap{position:relative;z-index:1;max-width:540px;margin:0 auto}
+.card{position:relative;background:var(--cream);border:1.5px solid var(--line);border-radius:230px 230px 22px 22px;padding:30px 30px 38px;box-shadow:0 24px 60px -22px rgba(122,32,48,.55)}
+.card::before{content:"";position:absolute;inset:9px;border:1px solid var(--line);border-radius:222px 222px 16px 16px;pointer-events:none}
+.inner{position:relative;z-index:2;text-align:center;height:auto;margin:0 auto 2px;overflow:visible}
+.archtext{display:block;width:100%;height:auto;margin:0 auto 2px}
+.archtext text{fill:var(--ink);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:17px;letter-spacing:4px}
+.cake{width:78px;height:auto;margin:2px auto 8px;display:block}
+.title{font-size:62px;line-height:.9;font-weight:600;letter-spacing:.01em;margin:8px 0 -6px}
+.script{font-family:'Pinyon Script',cursive;font-size:74px;line-height:.8;font-weight:400;margin:0 0 4px;color:var(--red)}
+.sub{letter-spacing:.18em;margin:14px 0 2px;font-size:19px;font-weight:600}
+.sub.small{font-size:14px;letter-spacing:.22em}
+.divider{display:flex;align-items:center;gap:10px;justify-content:center;margin:22px auto;max-width:300px;color:var(--red)}
+.divider .l{flex:1;height:1px;background:var(--red)}
+.divider .d{font-size:14px}
+.date{font-size:32px;font-weight:700;margin:6px 0 2px;letter-spacing:.04em}
+.time{font-size:16px;letter-spacing:.18em;font-weight:600;margin-bottom:6px}
+.addr{font-style:italic;opacity:.7;font-size:15px;line-height:1.5;margin-bottom:8px}
+.maplink{display:inline-block;margin-top:4px;padding:8px 20px;border:1.5px solid var(--line);border-radius:30px;color:var(--red);text-decoration:none;font-size:13px;letter-spacing:.1em}
+.maplink:hover{background:var(--line);color:#fff}
+.rsvp{margin-top:10px}
+.rsvp h2{font-size:26px;font-weight:600;margin-bottom:14px;letter-spacing:.04em}
+.field{margin-bottom:14px;text-align:left}
+.field label{display:block;font-size:13px;letter-spacing:.12em;opacity:.7;margin-bottom:5px;text-transform:uppercase}
+.field input[type=text]{width:100%;padding:10px 14px;border:1.5px solid rgba(157,35,53,.4);border-radius:8px;background:rgba(255,255,255,.6);color:var(--ink);font-family:inherit;font-size:16px;outline:none}
+.field input[type=text]:focus{border-color:var(--red)}
+.choice{display:flex;gap:10px}
+.choice button{flex:1;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:transparent;color:var(--red);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+.choice button.active{background:var(--red);color:#fff}
+.choice button:hover:not(.active){background:rgba(157,35,53,.08)}
+.hidden{display:none!important}
+.stepper{display:flex;align-items:center;gap:12px;margin-top:6px}
+.stepper button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--red);font-size:20px;cursor:pointer;line-height:1;font-family:inherit}
+.stepper button:hover{background:var(--line);color:#fff}
+#guestLabel{font-size:16px;font-weight:600}
+.btn-submit{margin-top:18px;width:100%;padding:14px;border-radius:12px;background:var(--red);color:#fff;font-family:inherit;font-size:17px;font-weight:700;border:none;cursor:pointer;letter-spacing:.06em;transition:opacity .2s}
+.btn-submit:hover{opacity:.88}
+.btn-submit:disabled{opacity:.45;cursor:not-allowed}
+#statusMsg{min-height:20px;margin-top:8px;font-size:14px;text-align:center;opacity:.8}
+#doneView{display:none;text-align:center}
+#doneView .done-icon{font-size:48px;margin-bottom:8px}
+#doneView h2{font-size:26px;font-weight:700}
+#doneView p{opacity:.75;font-size:15px;margin-top:6px}
+.actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.actions a,.actions button{padding:9px 18px;border-radius:10px;border:1.5px solid var(--line);color:var(--red);text-decoration:none;font-family:inherit;font-size:14px;font-weight:600;background:transparent;cursor:pointer}
+.actions a:hover,.actions button:hover{background:var(--line);color:#fff}
+.adminlink{position:fixed;bottom:10px;right:14px;z-index:10}
+.adminlink button{background:none;border:none;color:rgba(157,35,53,.25);font-size:12px;cursor:pointer;font-family:inherit}
+.panel{display:none;position:fixed;inset:0;z-index:100;background:rgba(239,233,218,.97);padding:24px;overflow-y:auto}
+.panel h2{font-size:24px;font-weight:700;margin-bottom:16px;color:var(--red)}
+.gate{display:flex;gap:10px;margin-bottom:10px}
+.gate input{flex:1;padding:9px 12px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-family:inherit;font-size:15px}
+.gate button{padding:9px 16px;border-radius:8px;background:var(--red);color:#fff;border:none;cursor:pointer;font-family:inherit;font-weight:600}
+.err{color:var(--red);font-size:13px;opacity:.8}
+.stats{display:flex;gap:12px;margin:14px 0;flex-wrap:wrap}
+.stat{flex:1;min-width:80px;background:#fff;border:1px solid rgba(157,35,53,.2);border-radius:10px;padding:12px;text-align:center}
+.stat .n{font-size:32px;font-weight:700}
+.stat .t{font-size:12px;opacity:.6;letter-spacing:.08em}
+.tools{display:flex;gap:10px;margin:10px 0}
+.tools button{padding:8px 16px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--red);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.tools button:hover{background:var(--line);color:#fff}
+#listWrap{background:#fff;border:1px solid rgba(157,35,53,.2);border-radius:8px;padding:12px;max-height:320px;overflow-y:auto;font-size:13px;white-space:pre-wrap;font-family:monospace;color:var(--ink)}
+.loading{text-align:center;font-style:italic;opacity:.7;padding:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+<div class="inner">
+<svg class="archtext" viewBox="0 0 460 96" xmlns="http://www.w3.org/2000/svg">
+<path id="arc" d="M 28 86 A 360 360 0 0 1 432 86" fill="none"/>
+<text text-anchor="middle"><textPath href="#arc" startOffset="50%">TACOS, ALBERCA Y VERANO</textPath></text>
+</svg>
+<h1 class="title">ROSSANA'S</h1>
+<p class="script">Party</p>
+<p class="sub">BIRTHDAY 23<sup>RD</sup></p>
+<p class="sub small">POOL DAY</p>
+</div>
+<div class="divider"><span class="l"></span><span class="d">&#9670;</span><span class="l"></span></div>
+<p style="text-align:center;font-size:12px;letter-spacing:.14em;opacity:.6;margin-bottom:4px">DATE &amp; PLACE</p>
+<p class="date" style="text-align:center">S&#193;BADO 27 DE JUNIO</p>
+<p class="time" style="text-align:center">START AT 6 PM</p>
+<p class="addr" style="text-align:center">Eusebio B&#225;ez 402b, Deportistas,<br>31125 Chihuahua, Chih.</p>
+<div style="text-align:center;margin-bottom:6px">
+<a class="maplink" target="_blank" rel="noopener" href="https://maps.app.goo.gl/aQBrxD3TBqgnsqor9">&#128205; Ver en Maps</a>
+</div>
+<div class="divider"><span class="l"></span><span class="d">&#9670;</span><span class="l"></span></div>
+<div class="rsvp" id="formView">
+<h2>Confirma tu asistencia</h2>
+<div class="field">
+<label>&#191;C&#243;mo te llamas?</label>
+<input type="text" id="name" placeholder="Tu nombre completo" autocomplete="name">
+</div>
+<div class="field">
+<label>&#191;Asistir&#225;s?</label>
+<div class="choice">
+<button type="button" data-v="yes" id="btnYes">&#161;S&#237;, ah&#237; estar&#233;!</button>
+<button type="button" data-v="no" id="btnNo">No podr&#233; :(</button>
+</div>
+</div>
+<div class="field hidden" id="compField">
+<label>&#191;Llevar&#225;s acompa&#241;ante?</label>
+<div class="choice">
+<button type="button" data-v="yes" id="compYes">S&#237;</button>
+<button type="button" data-v="no" id="compNo">No</button>
+</div>
+</div>
+<div class="field hidden" id="guestsField">
+<label>&#191;Cu&#225;ntos acompa&#241;antes?</label>
+<div class="stepper">
+<button type="button" id="minus">&#8211;</button>
+<span id="guestLabel">1 acompa&#241;ante</span>
+<span class="v" id="guestVal" style="display:none">1</span>
+<button type="button" id="plus">+</button>
+</div>
+</div>
+<button class="btn-submit" id="submitBtn" disabled>Confirmar asistencia</button>
+<p id="statusMsg"></p>
+</div>
+<div id="doneView">
+<div class="done-icon">&#127881;</div>
+<h2 id="doneMsg">&#161;Listo!</h2>
+<p>Te esperamos el s&#225;bado 27 de junio.</p>
+<div class="actions">
+<a target="_blank" rel="noopener" id="calLink" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Rossana%27s+Party&dates=20260627T180000%2F20260627T235900&ctz=America%2FChihuahua&details=Tacos%2C+alberca+y+verano&location=Eusebio+B%C3%A1ez+402b%2C+Deportistas%2C+31125+Chihuahua%2C+Chih.">Agregar al calendario</a>
+<a target="_blank" rel="noopener" href="https://maps.app.goo.gl/aQBrxD3TBqgnsqor9">C&#243;mo llegar</a>
+<button id="editBtn">Editar mi respuesta</button>
+</div>
+</div>
+</div>
+</div>
+<div class="adminlink" id="adminLink"><button id="openAdmin">&#183; Organizadora &#183;</button></div>
+<div class="panel hidden" id="adminPanel">
+<div class="divider"><span class="l"></span><span class="d">&#9670;</span><span class="l"></span></div>
+<h2>Panel de Rossana</h2>
+<div id="gateView">
+<div class="gate">
+<input type="text" id="pass" placeholder="Contrase&#241;a" autocomplete="off">
+<button id="gateBtn">Entrar</button>
+</div>
+<p class="err hidden" id="gateErr">Contrase&#241;a incorrecta</p>
+</div>
+<div id="dashView" class="hidden">
+<div class="stats">
+<div class="stat"><div class="n" id="sTotal">0</div><div class="t">Personas</div></div>
+<div class="stat"><div class="n" id="sYes">0</div><div class="t">Confirmados</div></div>
+<div class="stat"><div class="n" id="sNo">0</div><div class="t">No van</div></div>
+</div>
+<div class="tools">
+<button id="refresh">&#8635; Actualizar</button>
+<button id="copyList">Copiar lista</button>
+</div>
+<div id="listWrap"><p class="loading">Cargando&#8230;</p></div>
+</div>
+</div>
+<script>
+const BACKEND='https://script.google.com/macros/s/AKfycbxoHYhLj4TY3_8lO_seX2JOV7cYl_5EosL3kEsGCRB0HCTyUed7-DDY-ebkBhnAbzaPGw/exec';
+const ADMIN_PASS='alberca27';
+function $(id){return document.getElementById(id);}
+function callServer(action,data){
+  return fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...data})})
+    .then(r=>r.json());
+}
+let attend=null,comp=null,guests=1;
+function setAttend(v){
+  attend=v;
+  $('btnYes').classList.toggle('active',v==='yes');
+  $('btnNo').classList.toggle('active',v==='no');
+  $('compField').classList.toggle('hidden',v!=='yes');
+  if(v==='no'){comp=null;$('guestsField').classList.add('hidden');}
+  validate();
+}
+function setComp(v){
+  comp=v;
+  $('compYes').classList.toggle('active',v==='yes');
+  $('compNo').classList.toggle('active',v==='no');
+  $('guestsField').classList.toggle('hidden',v!=='yes');
+  validate();
+}
+function validate(){
+  const ok=($('name').value.trim()!=='')&&(attend!==null)&&(attend==='no'||(attend==='yes'&&comp!==null));
+  $('submitBtn').disabled=!ok;
+}
+$('btnYes').onclick=()=>setAttend('yes');
+$('btnNo').onclick=()=>setAttend('no');
+$('compYes').onclick=()=>setComp('yes');
+$('compNo').onclick=()=>setComp('no');
+$('name').addEventListener('input',validate);
+$('minus').onclick=()=>{if(guests>1){guests--;updateGuests();}};
+$('plus').onclick=()=>{if(guests<10){guests++;updateGuests();}};
+function updateGuests(){
+  $('guestLabel').textContent=guests+(guests===1?' acompañante':' acompañantes');
+  $('guestVal').textContent=guests;
+}
+$('submitBtn').onclick=async function(){
+  const name=$('name').value.trim();
+  const id=name.toLowerCase().replace(/\s+/g,'-')+'-'+Date.now();
+  $('submitBtn').disabled=true;
+  $('statusMsg').textContent='Guardando...';
+  try{
+    await callServer('save',{id,name,attending:attend==='yes',guests:comp==='yes'?guests:0});
+    const first=name.split(' ')[0];
+    const total=attend==='yes'?(comp==='yes'?1+guests:1):0;
+    $('doneMsg').textContent=attend==='yes'
+      ?(comp==='yes'?'Quedaron '+(total)+' lugares a tu nombre, '+first+'.':'Tu lugar está apartado, '+first+'!')
+      :'Te vamos a extrañar, '+first+'.';
+    $('formView').style.display='none';
+    $('doneView').style.display='block';
+    $('statusMsg').textContent='';
+  }catch(e){
+    $('statusMsg').textContent='Error al guardar. Inténtalo de nuevo.';
+    $('submitBtn').disabled=false;
+  }
+};
+$('editBtn').onclick=function(){
+  $('doneView').style.display='none';
+  $('formView').style.display='block';
+};
+$('openAdmin').onclick=function(){
+  $('adminPanel').classList.remove('hidden');
+};
+$('gateBtn').onclick=function(){
+  if($('pass').value===ADMIN_PASS){
+    $('gateView').classList.add('hidden');
+    $('dashView').classList.remove('hidden');
+    loadDash();
+  }else{
+    $('gateErr').classList.remove('hidden');
+  }
+};
+async function loadDash(){
+  $('listWrap').innerHTML='<p class="loading">Cargando…</p>';
+  try{
+    const data=await callServer('list',{});
+    const rows=Array.isArray(data)?data:[];
+    const yes=rows.filter(r=>r['Asiste']==='Sí'||r['Asiste']===true);
+    const no=rows.filter(r=>r['Asiste']==='No'||r['Asiste']===false);
+    const total=rows.reduce((s,r)=>s+(Number(r['Total personas'])||0),0);
+    $('sTotal').textContent=total;
+    $('sYes').textContent=yes.length;
+    $('sNo').textContent=no.length;
+    if(rows.length===0){$('listWrap').textContent='Sin respuestas aún.';}
+    else{
+      $('listWrap').innerHTML='';
+      rows.forEach(r=>{
+        const d=document.createElement('div');
+        d.style='padding:6px 0;border-bottom:1px solid rgba(157,35,53,.1)';
+        d.textContent=(r['Nombre']||'?')+' — '+(r['Asiste']==='Sí'?'✅ Va':'No va')+
+          (Number(r['Total personas'])>0?' ('+r['Total personas']+' personas)':'');
+        $('listWrap').appendChild(d);
+      });
+    }
+  }catch(e){$('listWrap').textContent='Error al cargar.';}
+}
+$('refresh').onclick=loadDash;
+$('copyList').onclick=async function(){
+  const data=await callServer('list',{});
+  const rows=Array.isArray(data)?data:[];
+  const txt=rows.map(r=>(r['Nombre']||'?')+' - '+(r['Asiste']==='Sí'?'VA':'No va')+
+    (Number(r['Total personas'])>0?' ('+r['Total personas']+' personas)':'')).join('\n');
+  navigator.clipboard.writeText(txt);
+};
+// Close admin on ESC
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('adminPanel').classList.add('hidden');});
+</script>
+</body>
+</html>
