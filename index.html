@@ -170,7 +170,7 @@ const BACKEND='https://script.google.com/macros/s/AKfycbwvqNc3qxGD6mb3YK0-fjOZh4
 const ADMIN_PASS='alberca27';
 function $(id){return document.getElementById(id);}
 function callServer(action,data){
-  return fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...data})})
+  return fetch(BACKEND,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action,...data})})
     .then(r=>r.json());
 }
 let attend=null,comp=null,guests=1;
